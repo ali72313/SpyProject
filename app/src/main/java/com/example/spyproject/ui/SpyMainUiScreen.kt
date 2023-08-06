@@ -1,61 +1,54 @@
 package com.example.spyproject.ui
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.spyproject.R
 import com.example.spyproject.models.NavigationItem
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 
 
-
-
-//test2
-//test33
 @Composable
 fun SpyMainUiScreen() {
     Scaffold(
@@ -140,9 +133,6 @@ fun SpyMainScreenBottomBar() {
 @Composable
 fun SpyMainScreenUiContent() {
 
-    var isExpandedTime by rememberSaveable {
-        mutableStateOf(false)
-    }
 
     Column() {
 
@@ -153,6 +143,7 @@ fun SpyMainScreenUiContent() {
                 .fillMaxHeight(0.3f)
         )
         {
+
         }
         Row(
             modifier = Modifier
@@ -171,14 +162,8 @@ fun SpyMainScreenUiContent() {
             ) {
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "")
                 Text(text = "time")
-                DropdownMenu(
-                    expanded = isExpandedTime,
-                    onDismissRequest = { isExpandedTime = false }) {
-                      DropdownMenuItem(text = { Text(text = "ali")}, onClick = { /*TODO*/ })
-                      DropdownMenuItem(text = { Text(text = "ali")}, onClick = { /*TODO*/ })
-                      DropdownMenuItem(text = { Text(text = "ali")}, onClick = { /*TODO*/ })
+                SpyMainUiDropDown()
 
-                }
 
             }
             Column(
@@ -187,6 +172,7 @@ fun SpyMainScreenUiContent() {
             ) {
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "")
                 Text(text = "time")
+                SpyMainUiDropDown()
 
             }
             Column(
@@ -195,8 +181,47 @@ fun SpyMainScreenUiContent() {
             ) {
                 Icon(imageVector = Icons.Default.Phone, contentDescription = "")
                 Text(text = "time")
+                SpyMainUiDropDown()
 
             }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(1f)
+                .background(color = Color.Yellow.copy(alpha = 0.2f))
+                .wrapContentSize(align = Alignment.Center)
+        )
+        {
+            Button(onClick = { /*TODO*/ }) {
+               Text(text = stringResource(R.string.start))
+            }
+        }
+
+
+    }
+
+
+}
+
+@Composable
+fun SpyMainUiDropDown(modifier: Modifier = Modifier) {
+
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
+
+
+    IconButton(onClick = { isExpanded = !isExpanded }) {
+        Icon(
+            imageVector = if (!isExpanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+            contentDescription = null
+        )
+        DropdownMenu(
+
+            expanded = isExpanded,
+            onDismissRequest = { isExpanded = false }) {
+            DropdownMenuItem(text = { Text(text = "ali") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "ali") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "ali") }, onClick = { /*TODO*/ })
         }
     }
 
